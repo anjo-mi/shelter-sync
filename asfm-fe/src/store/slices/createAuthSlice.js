@@ -62,8 +62,42 @@ export const createAuthSlice = (set, get) => ({
     return null;
   },
 
-  signUp: async () => {
-    // TODO add some shit
+  signUp: async (value) => {
+    set({ loading: true })
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      address,
+      phone,
+      roleCode,
+    } = value;
+    console.log({value})
+    const role = roleCode === 'mysupersecretsquirrelpassword' ? 'STAFF' : 'USER';
+    console.log({role,roleCode})
+    const {data,error} = supabase.auth.signUp({
+      email,
+      password,
+      options:{
+        data: {
+          first_name,
+          last_name,
+          email,
+          password,
+          address,
+          phone,
+          role,
+        },
+        emailRedirectTo: "/",
+      },
+    })
+
+    if (error){
+      console.error(error.message);
+      set({ loading: false });
+      return error;
+    }
     return null;
   },
 

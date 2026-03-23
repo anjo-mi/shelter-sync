@@ -190,6 +190,29 @@ function SignUpForm() {
                     );
                   }}
                   />
+                <form.Field
+                  name="roleCode"
+                  children={(field) => {
+                    const error = field.state.meta.errors?.[0];
+                    const isInvalid = field.state.meta.isTouched && !!error;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>Role Code (Admin Only)</FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          type="password"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          placeholder="Role Code"
+                          aria-invalid={isInvalid}
+                        />
+                        {error && <FieldError>{error}</FieldError>}
+                      </Field>
+                    );
+                  }}
+                  />
                   <form.Field
                     name="password"
                     validators={{
