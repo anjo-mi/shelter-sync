@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ReusableTable } from '../../components/table_components';
 import { useEffect, useState, useMemo } from 'react';
 import apiClient from '../../lib/axios';
@@ -10,6 +10,7 @@ export const Route = createFileRoute('/_admin/users')({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -145,6 +146,7 @@ function RouteComponent() {
         tablebodyRowClassName="bg-card hover:bg-secondary/20"
         containerClassName="overflow-auto max-h-150 rounded-lg border border-pale-sky shadow-sm relative w-full"
         enablePagination
+        onRowClick={(row) => navigate({ to: '/user-profile/$userId', params: { userId: row.id } })}
       />
     </>
   );

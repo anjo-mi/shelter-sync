@@ -40,6 +40,7 @@ export function ReusableTable({
   pageSizeOptions = [5, 10, 20, 50, 100],
   defaultVisibleColumns = null,
   initialSort = null,
+  onRowClick = null,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(pageSize);
@@ -258,7 +259,11 @@ export function ReusableTable({
                   </ShadcnTableRow>
                 ))
               : paginatedData.map((row, rowIndex) => (
-                  <ShadcnTableRow key={rowIndex} className={`${tablebodyRowClassName}`}>
+                  <ShadcnTableRow
+                    key={rowIndex}
+                    className={`${tablebodyRowClassName} ${onRowClick ? 'cursor-pointer' : ''}`}
+                    onClick={onRowClick ? () => onRowClick(row) : undefined}
+                  >
                     {visibleColumnDefs.map((column) => {
                       const columnKey = getColumnKey(column);
                       return (
