@@ -36,7 +36,10 @@ export const createAuthSlice = (set, get) => ({
 
   signIn: async (email, password) => {
     set({ loading: true });
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
       console.error(error.message);
@@ -63,23 +66,17 @@ export const createAuthSlice = (set, get) => ({
   },
 
   signUp: async (value) => {
-    set({ loading: true })
-    const {
-      first_name,
-      last_name,
+    set({ loading: true });
+    const { first_name, last_name, email, password, address, phone, roleCode } =
+      value;
+    console.log({ value });
+    const role =
+      roleCode === 'mysupersecretsquirrelpassword' ? 'STAFF' : 'USER';
+    console.log({ role, roleCode });
+    const { data, error } = supabase.auth.signUp({
       email,
       password,
-      address,
-      phone,
-      roleCode,
-    } = value;
-    console.log({value})
-    const role = roleCode === 'mysupersecretsquirrelpassword' ? 'STAFF' : 'USER';
-    console.log({role,roleCode})
-    const {data,error} = supabase.auth.signUp({
-      email,
-      password,
-      options:{
+      options: {
         data: {
           first_name,
           last_name,
@@ -89,11 +86,11 @@ export const createAuthSlice = (set, get) => ({
           phone,
           role,
         },
-        emailRedirectTo: "/",
+        emailRedirectTo: '/',
       },
-    })
+    });
 
-    if (error){
+    if (error) {
       console.error(error.message);
       set({ loading: false });
       return error;
