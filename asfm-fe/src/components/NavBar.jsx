@@ -75,6 +75,11 @@ function NavBar() {
                     Actions for navigating through your user resources
                   </SheetDescription>
                   <SheetClose asChild>
+                    <Button variant="outline" onClick={() => navigate({ to: '/profile' })}>
+                      Profile
+                    </Button>
+                  </SheetClose>
+                  <SheetClose asChild>
                     <Button variant="outline" onClick={() => navigate({ to: '/my-animals' })}>
                       My Animals
                     </Button>
@@ -103,6 +108,9 @@ function NavBar() {
               </Sheet>
             ) : (
               <div className="hidden lg:contents">
+                <Button variant="outline" onClick={() => navigate({ to: '/profile' })}>
+                  Profile
+                </Button>
                 <Button variant="outline" onClick={() => navigate({ to: '/my-animals' })}>
                   My Animals
                 </Button>
